@@ -2,15 +2,15 @@ $main-color: #8e7aae;
 $main-color-active: #6a558c;
 $svg-white: invert(100%) sepia(0%) saturate(7500%) hue-rotate(65deg) brightness(114%) contrast(106%);
 
-@mixin flex-row {
+@mixin flex($direction: row) {
     display: flex;
-    flex-direction: row;
+    flex-direction: $direction;
 }
 
-@mixin flex-column {
-    display: flex;
-    flex-direction: column;
+@mixin transition-nav-button {
+    transition: background-color 250ms linear;
 }
+
 //Barra de Menu Responsive Mobile-Web
 @media only screen and (max-width: 1006px) {
     .navigation-menu-web {
@@ -20,7 +20,7 @@ $svg-white: invert(100%) sepia(0%) saturate(7500%) hue-rotate(65deg) brightness(
     .navigation-menu-mobile {
         width: 100px;
         height: 100%;
-        display: flex;
+        @include flex();
         justify-content: center;
     }
 }
@@ -65,14 +65,14 @@ header {
     height: 75px;
     background-color: $main-color;
     padding: 0 25px;
-    @include flex-row;
+    @include flex(row);
     align-items: center;
     justify-content: space-between;
 
     .logo-container {
         width: 250px;
         height: 100%;
-        @include flex-row;
+        @include flex(row);
         align-items: center;
         justify-content: center;
         color: white;
@@ -114,7 +114,7 @@ nav {
             background-color: $main-color;
 
             &.show {
-                @include flex-column;
+                @include flex(column);
                 height: 50%;
                 padding: 0;
                 border-radius: 0;
@@ -125,6 +125,7 @@ nav {
                 background-color: $main-color;
                 text-decoration: none;
                 height: 100%;
+                @include transition-nav-button;
 
                 &:hover {
                     background-color: white;
@@ -137,7 +138,7 @@ nav {
                     color: white;
                     width: 100%;
                     height: 100%;
-                    display: flex;
+                    @include flex();
                     align-items: center;
                     justify-content: center;
 
@@ -150,7 +151,7 @@ nav {
         }
     }
     ul.navigation-menu-web {
-        @include flex-row;
+        @include flex(row);
         list-style-type: none;
         width: 100%;
         height: 100%;
@@ -162,6 +163,7 @@ nav {
             background-color: $main-color;
             text-decoration: none;
             height: 100%;
+            @include transition-nav-button;
 
             &:hover {
                 background-color: white;
@@ -174,7 +176,7 @@ nav {
                 color: white;
                 width: 100%;
                 height: 100%;
-                display: flex;
+                @include flex();
                 align-items: center;
                 justify-content: center;
 
@@ -202,15 +204,6 @@ li {
     text-align: center;
 }
 
-.red-social {
-    height: 30px;
-    filter: $svg-white;
-}
-
-.redes-sociales {
-    margin-right: 25px;
-}
-
 main {
     box-sizing: border-box;
     height: 100%;
@@ -224,13 +217,13 @@ main {
         padding: 25px;
     }
 
-    &.productos {
+    &.productos-container {
         background-color: #f0f0f0;
         padding: 25px;
     }
 
     &.quienes-somos {
-        @include flex-column;
+        @include flex(column);
         overflow: auto;
         padding: 50px 100px;
     }
@@ -241,13 +234,19 @@ footer {
     height: 60px;
     color: white;
     background-color: #999999;
-    display: flex;
+    @include flex();
     align-items: center;
     justify-content: space-between;
 
     .redes-sociales {
-        display: flex;
+        @include flex();
         align-items: center;
+        margin-right: 25px;
+
+        .red-social {
+            height: 30px;
+            filter: $svg-white;
+        }
     }
 
     .seguinos-en {
@@ -257,39 +256,74 @@ footer {
 
 /* Contacto*/
 .contacto form {
-    @include flex-column;
+    @include flex(column);
     width: 100%;
 }
 
-form .input {
-    margin: 5px 0;
-}
+form {
+    * {
+        transition: transform 1s;
+    }
 
-form input {
-    height: 30px;
-}
+    input {
+        height: 30px;
+        margin: 5px 0;
 
-form textarea {
-    height: 100px;
-    resize: vertical;
-    min-height: 75px;
-    max-height: 300px;
-}
+        &:focus {
+            transform: scale(1.02);
+        }
+    }
 
-form .enviar {
-    background-color: $main-color;
-    color: white;
-    border: 0;
-    height: 50px;
-    width: 200px;
-    align-self: flex-end;
-    font-size: 15px;
+    textarea {
+        height: 100px;
+        resize: vertical;
+        min-height: 75px;
+        max-height: 300px;
+
+        &:focus {
+            transform: scale(1.02);
+        }
+    }
+
+    .enviar {
+        background-color: $main-color;
+        color: white;
+        border: 0;
+        height: 50px;
+        width: 200px;
+        align-self: flex-end;
+        font-size: 15px;
+        margin-top: 10px;
+
+        & span {
+            display: inline-block;
+            position: relative;
+            transition: 0.5s;
+        }
+
+        & span:after {
+            content: "\00bb";
+            position: absolute;
+            opacity: 0;
+            top: 0;
+            right: -20px;
+            transition: 0.5s;
+        }
+        &:hover span {
+            padding-right: 25px;
+        }
+
+        &:hover span:after {
+            opacity: 1;
+            right: 0;
+        }
+    }
 }
 
 //Pagina de Contacto Responsive Mobile-Web
 @media only screen and (max-width: 1100px) {
     main.contacto-donde-estamos {
-        @include flex-column;
+        @include flex(column);
         overflow-y: auto;
         section {
             width: 100%;
@@ -300,7 +334,7 @@ form .enviar {
 
 @media only screen and (min-width: 1100px) {
     main.contacto-donde-estamos {
-        @include flex-row;
+        @include flex(row);
 
         section {
             width: 50%;
@@ -320,7 +354,7 @@ main.contacto-donde-estamos section {
     }
 
     &.contacto {
-        @include flex-column;
+        @include flex(column);
         background-color: lightgray;
         align-items: center;
         justify-content: center;
@@ -339,7 +373,6 @@ main.contacto-donde-estamos section {
             padding: 50px 100px;
         }
     }
-    
 
     &.donde-estamos h2 {
         margin-bottom: 5px;
@@ -347,11 +380,11 @@ main.contacto-donde-estamos section {
 }
 
 .datos-de-contacto {
-    @include flex-column;
+    @include flex(column);
     margin-top: 5px;
 
     .linea {
-        @include flex-row;
+        @include flex(row);
         margin: 3px 0;
 
         .titulo {
@@ -375,11 +408,23 @@ main.contacto-donde-estamos section {
 
     img {
         width: 100%;
+
         &:hover {
-            box-shadow: rgba(142, 122, 174, 1) 0px 5px 20px;
-            transform: scale(1.15);
             cursor: pointer;
+            animation-name: image-zoom-in-out;
+            animation-duration: 1s;
+            animation-fill-mode: forwards;
         }
+    }
+}
+
+@keyframes image-zoom-in-out {
+    from {
+        box-shadow: none;
+    }
+    to {
+        box-shadow: rgba(142, 122, 174, 1) 0px 5px 20px;
+        transform: scale(1.15);
     }
 }
 
@@ -397,7 +442,7 @@ main.contacto-donde-estamos section {
 }
 
 .producto {
-    @include flex-column;
+    @include flex(column);
     border: 1px solid lightgrey;
     background-color: white;
     width: 100%;
@@ -410,7 +455,7 @@ main.contacto-donde-estamos section {
         width: 100%;
     }
 
-    span {
+    span.botonera {
         align-self: flex-start;
         margin: 3px 0;
     }
@@ -420,54 +465,54 @@ main.contacto-donde-estamos section {
     }
 
     .precio {
+        align-self: flex-start;
         font-size: 20px;
         color: lightslategray;
     }
 
     .talles {
+        align-self: flex-start;
         font-size: 13px;
     }
 
-    ul {
+    ul.lista-talles {
         list-style-type: none;
         padding-inline-start: 0;
-        display: flex;
+        @include flex();
         justify-content: space-between;
         width: 100%;
-    }
-}
+        @include flex(row);
 
-.lista-talles {
-    @include flex-row;
-
-    li {
-        border: 1px solid lightgray;
-        height: 30px;
-        width: 40px;
-        text-align: center;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background-color: white;
-        color: black;
-
-        &:hover {
-            color: white;
-            background-color: $main-color;
-            border: 1px solid black;
-            cursor: pointer;
+        li {
+            border: 1px solid lightgray;
+            height: 30px;
+            width: 40px;
+            text-align: center;
+            @include flex();
+            align-items: center;
+            justify-content: center;
+            background-color: white;
+            color: black;
+            transition: background-color 250ms;
+            
+            &:hover {
+                color: white;
+                background-color: $main-color;
+                border: 1px solid black;
+                cursor: pointer;
+            }
         }
     }
 }
 
 .botonera {
-    @include flex-row;
+    @include flex(row);
     justify-content: space-between;
     padding: 0 10px;
     flex-wrap: wrap;
 
     form {
-        @include flex-row;
+        @include flex(row);
         align-items: center;
         height: 40px;
 
@@ -476,27 +521,27 @@ main.contacto-donde-estamos section {
             width: 350px;
         }
     }
-}
 
-.boton {
-    background-color: $main-color;
-    color: white;
-    border: 0;
-    cursor: pointer;
+    .boton {
+        background-color: $main-color;
+        color: white;
+        border: 0;
+        cursor: pointer;
 
-    &.filtrar {
-        width: 75px;
-        height: 40px;
-    }
+        &.filtrar {
+            width: 75px;
+            height: 40px;
+        }
 
-    &.boton-buscar {
-        @include flex-row;
-        align-items: center;
-        height: 40px;
-        padding: 0 20px;
+        &.boton-buscar {
+            @include flex(row);
+            align-items: center;
+            height: 40px;
+            padding: 0 20px;
 
-        img {
-            filter: invert(100%) sepia(0%) saturate(7500%) hue-rotate(65deg) brightness(114%) contrast(106%);
+            img {
+                filter: invert(100%) sepia(0%) saturate(7500%) hue-rotate(65deg) brightness(114%) contrast(106%);
+            }
         }
     }
 }
@@ -524,6 +569,7 @@ iframe {
     .carousel-inner {
         height: 100%;
         background-color: black;
+
         .carousel-item {
             height: 100%;
 
