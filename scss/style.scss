@@ -254,7 +254,7 @@ footer {
     }
 }
 
-/* Contacto*/
+/* Estilos Pagina Contacto*/
 .contacto form {
     @include flex(column);
     width: 100%;
@@ -394,7 +394,7 @@ main.contacto-donde-estamos section {
     }
 }
 
-/*Galeria*/
+/*Estilos Pagina Galeria*/
 .lista-de-imagenes {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(275px, 1fr));
@@ -428,7 +428,7 @@ main.contacto-donde-estamos section {
     }
 }
 
-/*Productos*/
+/*Estilos Pagina productos*/
 .lista-de-productos {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(275px, 1fr));
