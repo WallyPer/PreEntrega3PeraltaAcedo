@@ -222,7 +222,7 @@ footer .seguinos-en {
   margin-right: 10px;
 }
 
-/* Contacto*/
+/* Estilos Pagina Contacto*/
 .contacto form {
   display: flex;
   flex-direction: column;
@@ -347,7 +347,7 @@ main.contacto-donde-estamos section.donde-estamos h2 {
   margin-right: 5px;
 }
 
-/*Galeria*/
+/*Estilos Pagina Galeria*/
 .lista-de-imagenes {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(275px, 1fr));
@@ -378,7 +378,7 @@ main.contacto-donde-estamos section.donde-estamos h2 {
     transform: scale(1.15);
   }
 }
-/*Productos*/
+/*Estilos Pagina productos*/
 .lista-de-productos {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(275px, 1fr));
